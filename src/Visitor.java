@@ -32,4 +32,10 @@ public class Visitor extends Person {
     public void setHasVIP(boolean hasVIP) {
         this.hasVIP = hasVIP;
     }
+
+    public String toString() {
+        String vipStatus = hasVIP ? "VIP" : "Regular";
+        return "Visitor: " + getName() + " (ID: " + getId() + ", Age: " + getAge() + 
+               ", Ticket: " + ticketType + ", " + vipStatus + ")";
+    }
 }

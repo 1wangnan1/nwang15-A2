@@ -6,7 +6,7 @@ public class Ride implements RideInterface {
     private int capacity;
     private Employee operator;
     
-    // added collections for part 2
+    // collections for queue and history
     private Queue<Visitor> waitingQueue; // for waiting line
     private LinkedList<Visitor> rideHistory; // for ride history
     
@@ -63,17 +63,39 @@ public class Ride implements RideInterface {
         this.operator = operator;
     }
     
-    // Interface methods - will implement properly in next parts
+    @Override
     public void addVisitorToQueue(Visitor visitor) {
-        System.out.println("addVisitorToQueue - not implemented yet");
+        if (visitor != null) {
+            waitingQueue.add(visitor);
+            System.out.println("Success: " + visitor.getName() + " added to queue for " + rideName);
+        } else {
+            System.out.println("Error: Cannot add null visitor to queue");
+        }
     }
-    
+
+    @Override
     public void removeVisitorFromQueue() {
-        System.out.println("removeVisitorFromQueue - not implemented yet");
+        if (!waitingQueue.isEmpty()) {
+            Visitor removed = waitingQueue.remove();
+            System.out.println("Success: " + removed.getName() + " removed from queue");
+        } else {
+            System.out.println("Error: Queue is empty, cannot remove visitor");
+        }
     }
     
+    @Override
     public void printQueue() {
-        System.out.println("printQueue - not implemented yet");
+        if (waitingQueue.isEmpty()) {
+            System.out.println("Queue for " + rideName + " is empty");
+        } else {
+            System.out.println("=== Waiting Queue for " + rideName + " ===");
+            int position = 1;
+            for (Visitor visitor : waitingQueue) {
+                System.out.println(position + ". " + visitor.toString());
+                position++;
+            }
+            System.out.println("Total visitors in queue: " + waitingQueue.size());
+        }
     }
     
     public void addVisitorToHistory(Visitor visitor) {
