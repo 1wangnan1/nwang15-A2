@@ -1,4 +1,3 @@
-// Visitor.java
 public class Visitor extends Person {
     private String ticketType;
     private boolean hasVIP;

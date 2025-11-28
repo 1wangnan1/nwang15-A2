@@ -1,11 +1,9 @@
-// AssignmentTwo.java
 public class AssignmentTwo {
     
     public static void main(String[] args) {
         System.out.println("Assignment 2 Start");
-        
-        // test the classes we made
         testPart1();
+        testPart2();
     }
     
     // method to test part 1
@@ -32,12 +30,20 @@ public class AssignmentTwo {
         System.out.println("Ride capacity: " + ride1.getCapacity());
         System.out.println("Ride operator: " + ride1.getOperator().getName());
     }
-    
-    // other parts will go here later
-    public void partThree() {}
-    public void partFourA() {}
-    public void partFourB() {}
-    public void partFive() {}
-    public void partSix() {}
-    public void partSeven() {}
+    //method to test part 2
+    public static void testPart2() {
+        System.out.println("\n=== Testing Part 2 ===");
+        
+        // create objects for testing
+        Employee emp1 = new Employee("Mike", 30, "E002", "Operator", 2500.0);
+        Ride ride2 = new Ride("Ferris Wheel", "scenic", 15, emp1);
+        
+        // test that Ride implements the interface
+        System.out.println("Ride implements RideInterface: " + (ride2 instanceof RideInterface));
+        
+        // test interface methods (they will print "not implemented yet")
+        Visitor testVisitor = new Visitor("Bob", 18, "V002", "regular", false);
+        ride2.addVisitorToQueue(testVisitor);
+        ride2.printQueue();
+    }
 }

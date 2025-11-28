@@ -1,5 +1,4 @@
-// Person.java
-public abstract class Person {
+public abstract class Person {  
     private String name;
     private int age;
     private String id;
@@ -41,5 +40,10 @@ public abstract class Person {
     
     public void setId(String id) {
         this.id = id;
+    }
+    
+    // added toString for better printing
+    public String toString() {
+        return "Name: " + name + ", Age: " + age + ", ID: " + id;
     }
 }

@@ -1,6 +1,4 @@
-// RideInterface.java
 public interface RideInterface {
-    // add visitor to queue
     void addVisitorToQueue(Visitor visitor);
     
     // remove visitor from queue
