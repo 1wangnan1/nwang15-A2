@@ -309,4 +309,65 @@ public class Ride implements RideInterface {
             System.out.println("Error message: " + e.getMessage());
         }
     }
+     // PART 7: Import ride history from file
+    public void importRideHistory(String filename) {
+        int importedCount = 0;
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            boolean firstLine = true;
+            
+            while ((line = reader.readLine()) != null) {
+                // Skip header line
+                if (firstLine) {
+                    firstLine = false;
+                    continue;
+                }
+                
+                // Skip empty lines
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                
+                // Split CSV line by commas
+                String[] parts = line.split(",");
+                
+                // Check if we have enough parts
+                if (parts.length >= 5) {
+                    try {
+                        String name = parts[0];
+                        int age = Integer.parseInt(parts[1]);
+                        String id = parts[2];
+                        String ticketType = parts[3];
+                        boolean hasVIP = Boolean.parseBoolean(parts[4]);
+                        
+                        // Create new visitor and add to history
+                        Visitor visitor = new Visitor(name, age, id, ticketType, hasVIP);
+                        rideHistory.add(visitor);
+                        importedCount++;
+                        
+                    } catch (NumberFormatException e) {
+                        System.out.println("Warning: Could not parse number in line: " + line);
+                    }
+                } else {
+                    System.out.println("Warning: Invalid data format in line: " + line);
+                }
+            }
+            
+            System.out.println("Success: Imported " + importedCount + " visitors from file: " + filename);
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found: " + filename);
+        } catch (IOException e) {
+            System.out.println("Error: Could not read file: " + filename);
+            System.out.println("Error message: " + e.getMessage());
+        }
+    }
+    
+    // PART 7: Alternative method to import from default export file
+    public void importRideHistory() {
+        String filename = rideName.replace(" ", "_") + "_history.csv";
+        importRideHistory(filename);
+    }
+    
 }
