@@ -1,15 +1,21 @@
-import java.util.*; 
 
-public class Ride implements RideInterface { 
+import java.util.*;
+
+public class Ride implements RideInterface {
+
     private String rideName;
     private String type;
     private int capacity;
     private Employee operator;
-    
+
     // collections for queue and history
     private Queue<Visitor> waitingQueue; // for waiting line
     private LinkedList<Visitor> rideHistory; // for ride history
-    
+
+    // PART 5: new instance variables
+    private int maxRider;
+    private int numOfCycles;
+
     // default constructor
     public Ride() {
         this.rideName = "unknown ride";
@@ -18,8 +24,10 @@ public class Ride implements RideInterface {
         this.operator = null;
         this.waitingQueue = new LinkedList<>(); // initialize queue
         this.rideHistory = new LinkedList<>(); // initialize history
+        this.maxRider = 4; // default max riders per cycle
+        this.numOfCycles = 0; // start at 0
     }
-    
+
     // constructor with parameters
     public Ride(String rideName, String type, int capacity, Employee operator) {
         this.rideName = rideName;
@@ -28,41 +36,71 @@ public class Ride implements RideInterface {
         this.operator = operator;
         this.waitingQueue = new LinkedList<>(); // initialize queue
         this.rideHistory = new LinkedList<>(); // initialize history
+        this.maxRider = 4; // default max riders per cycle
+        this.numOfCycles = 0; // start at 0
     }
-    
+
+    // Part5: new constructor with maxRider
+    public Ride(String rideName, String type, int capacity, Employee operator, int maxRider) {
+        this.rideName = rideName;
+        this.type = type;
+        this.capacity = capacity;
+        this.operator = operator;
+        this.maxRider = maxRider;
+        this.numOfCycles = 0;
+        this.waitingQueue = new LinkedList<>();
+        this.rideHistory = new LinkedList<>();
+    }
+
     // getters and setters
     public String getRideName() {
         return rideName;
     }
-    
+
     public void setRideName(String rideName) {
         this.rideName = rideName;
     }
-    
+
     public String getType() {
         return type;
     }
-    
+
     public void setType(String type) {
         this.type = type;
     }
-    
+
     public int getCapacity() {
         return capacity;
     }
-    
+
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-    
+
     public Employee getOperator() {
         return operator;
     }
-    
+
     public void setOperator(Employee operator) {
         this.operator = operator;
     }
-    
+    // PART 5: new getters and setters
+    public int getMaxRider() {
+        return maxRider;
+    }
+
+    public void setMaxRider(int maxRider) {
+        this.maxRider = maxRider;
+    }
+
+    public int getNumOfCycles() {
+        return numOfCycles;
+    }
+
+    public void setNumOfCycles(int numOfCycles) {
+        this.numOfCycles = numOfCycles;
+    }
+
     @Override
     public void addVisitorToQueue(Visitor visitor) {
         if (visitor != null) {
@@ -97,7 +135,7 @@ public class Ride implements RideInterface {
             System.out.println("Total visitors in queue: " + waitingQueue.size());
         }
     }
-    
+
     // PART 4A: Ride history method
     @Override
     public void addVisitorToHistory(Visitor visitor) {
@@ -116,7 +154,7 @@ public class Ride implements RideInterface {
             System.out.println("Error: Cannot check null visitor");
             return false;
         }
-        
+
         boolean found = rideHistory.contains(visitor);
         if (found) {
             System.out.println("Success: " + visitor.getName() + " found in ride history");
@@ -157,12 +195,54 @@ public class Ride implements RideInterface {
             System.out.println("Info: No visitors in history to sort");
             return;
         }
-        
+
         Collections.sort(rideHistory, new VisitorComparator());
         System.out.println("Success: Ride history sorted by VIP status and age");
     }
 
+    // PART 5: runOneCycle implementation
     public void runOneCycle() {
-        System.out.println("runOneCycle - not implemented yet");
+        // check if operator is assigned
+        if (operator == null) {
+            System.out.println("Error: Cannot run " + rideName + " - no operator assigned");
+            return;
+        }
+
+        // check if queue is empty
+        if (waitingQueue.isEmpty()) {
+            System.out.println("Error: Cannot run " + rideName + " - no visitors in queue");
+            return;
+        }
+
+        System.out.println("\n=== Running " + rideName + " Cycle ===");
+        System.out.println("Operator: " + operator.getName());
+        System.out.println("Max riders per cycle: " + maxRider);
+        System.out.println("Visitors in queue before: " + waitingQueue.size());
+
+        int ridersThisCycle = 0;
+
+        // take visitors from queue and add to history
+        for (int i = 0; i < maxRider; i++) {
+            if (!waitingQueue.isEmpty()) {
+                Visitor rider = waitingQueue.remove();
+                rideHistory.add(rider);
+                ridersThisCycle++;
+                System.out.println(" - " + rider.getName() + " is riding");
+            } else {
+                break; // no more visitors in queue
+            }
+        }
+
+        // update cycle count
+        numOfCycles++;
+
+        System.out.println("Cycle completed: " + ridersThisCycle + " visitors rode");
+        System.out.println("Visitors in queue after: " + waitingQueue.size());
+        System.out.println("Total cycles run: " + numOfCycles);
+        System.out.println("Success: Ride cycle completed successfully");
+    }
+
+    public int getQueueSize() {
+        return waitingQueue.size();
     }
 }
