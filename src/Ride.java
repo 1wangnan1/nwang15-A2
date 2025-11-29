@@ -82,7 +82,7 @@ public class Ride implements RideInterface {
             System.out.println("Error: Queue is empty, cannot remove visitor");
         }
     }
-    
+
     @Override
     public void printQueue() {
         if (waitingQueue.isEmpty()) {
@@ -98,24 +98,70 @@ public class Ride implements RideInterface {
         }
     }
     
+    // PART 4A: Ride history method
+    @Override
     public void addVisitorToHistory(Visitor visitor) {
-        System.out.println("addVisitorToHistory - not implemented yet");
+        if (visitor != null) {
+            rideHistory.add(visitor);
+            System.out.println("Success: " + visitor.getName() + " added to ride history");
+        } else {
+            System.out.println("Error: Cannot add null visitor to history");
+        }
     }
-    
+
+    // PART 4A: Ride history method
+    @Override
     public boolean checkVisitorFromHistory(Visitor visitor) {
-        System.out.println("checkVisitorFromHistory - not implemented yet");
-        return false;
+        if (visitor == null) {
+            System.out.println("Error: Cannot check null visitor");
+            return false;
+        }
+        
+        boolean found = rideHistory.contains(visitor);
+        if (found) {
+            System.out.println("Success: " + visitor.getName() + " found in ride history");
+        } else {
+            System.out.println("Info: " + visitor.getName() + " not found in ride history");
+        }
+        return found;
     }
-    
+
+    // PART 4A: Ride history method
+    @Override
     public int numberOfVisitors() {
-        System.out.println("numberOfVisitors - not implemented yet");
-        return 0;
+        int count = rideHistory.size();
+        System.out.println("Number of visitors in history: " + count);
+        return count;
     }
-    
+
+    // PART 4A: Ride history method
+    @Override
     public void printRideHistory() {
-        System.out.println("printRideHistory - not implemented yet");
+        if (rideHistory.isEmpty()) {
+            System.out.println("Ride history for " + rideName + " is empty");
+        } else {
+            System.out.println("=== Ride History for " + rideName + " ===");
+            Iterator<Visitor> iterator = rideHistory.iterator();
+            int count = 1;
+            while (iterator.hasNext()) {
+                Visitor visitor = iterator.next();
+                System.out.println(count + ". " + visitor.toString());
+                count++;
+            }
+            System.out.println("Total visitors in history: " + rideHistory.size());
+        }
     }
-    
+
+    public void sortRideHistory() {
+        if (rideHistory.isEmpty()) {
+            System.out.println("Info: No visitors in history to sort");
+            return;
+        }
+        
+        Collections.sort(rideHistory, new VisitorComparator());
+        System.out.println("Success: Ride history sorted by VIP status and age");
+    }
+
     public void runOneCycle() {
         System.out.println("runOneCycle - not implemented yet");
     }

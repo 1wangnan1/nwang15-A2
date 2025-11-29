@@ -5,6 +5,8 @@ public class AssignmentTwo {
         partOne();
         partTwo();
         partThree();
+        partFourA();
+        partFourB();
     }
     
     // method to test part 1
@@ -22,7 +24,7 @@ public class AssignmentTwo {
         // create a ride with employee
         Ride ride1 = new Ride("Roller Coaster", "thrill", 20, emp1);
         System.out.println("Ride created: " + ride1.getRideName());
-        
+         
         // test setters
         vis1.setTicketType("season pass");
         System.out.println("Visitor ticket changed to: " + vis1.getTicketType());
@@ -99,5 +101,78 @@ public class AssignmentTwo {
         
         // print empty queue
         emptyRide.printQueue();
+    }
+
+    // PART 4A: Ride history implementation
+    public static void partFourA() {
+        System.out.println("\n=== Testing Part 4A: Ride History ===");
+        
+        Employee operator = new Employee("Chris", 32, "E004", "Operator", 2700.0);
+        Ride waterRide = new Ride("Splash Mountain", "water ride", 30, operator);
+        
+        // create 5 visitors
+        Visitor visitor1 = new Visitor("Anna", 25, "V201", "regular", false);
+        Visitor visitor2 = new Visitor("Ben", 30, "V202", "vip", true);
+        Visitor visitor3 = new Visitor("Cathy", 22, "V203", "day pass", false);
+        Visitor visitor4 = new Visitor("Dan", 28, "V204", "vip", true);
+        Visitor visitor5 = new Visitor("Eva", 35, "V205", "regular", false);
+        
+        // add visitors to history
+        System.out.println("\n--- Adding visitors to history ---");
+        waterRide.addVisitorToHistory(visitor1);
+        waterRide.addVisitorToHistory(visitor2);
+        waterRide.addVisitorToHistory(visitor3);
+        waterRide.addVisitorToHistory(visitor4);
+        waterRide.addVisitorToHistory(visitor5);
+        
+        // check if visitor is in history
+        System.out.println("\n--- Checking visitor in history ---");
+        waterRide.checkVisitorFromHistory(visitor3);
+        
+        Visitor unknownVisitor = new Visitor("Unknown", 40, "V999", "regular", false);
+        waterRide.checkVisitorFromHistory(unknownVisitor);
+        
+        // print number of visitors
+        System.out.println("\n--- Counting visitors ---");
+        waterRide.numberOfVisitors();
+        
+        // print ride history using iterator
+        System.out.println("\n--- Printing ride history ---");
+        waterRide.printRideHistory();
+    }
+
+    // PART 4B: Sorting implementation
+    public static void partFourB() {
+        System.out.println("\n=== Testing Part 4B: Sorting Ride History ===");
+        
+        Employee operator = new Employee("Alex", 29, "E005", "Operator", 2600.0);
+        Ride coaster = new Ride("Dragon Coaster", "thrill ride", 20, operator);
+        
+        // create visitors with different VIP status and ages
+        Visitor v1 = new Visitor("Young VIP", 18, "V301", "vip", true);
+        Visitor v2 = new Visitor("Old Regular", 45, "V302", "regular", false);
+        Visitor v3 = new Visitor("Young Regular", 20, "V303", "regular", false);
+        Visitor v4 = new Visitor("Old VIP", 40, "V304", "vip", true);
+        Visitor v5 = new Visitor("Middle Regular", 30, "V305", "regular", false);
+        
+        // add to history
+        System.out.println("\n--- Adding visitors to history ---");
+        coaster.addVisitorToHistory(v1);
+        coaster.addVisitorToHistory(v2);
+        coaster.addVisitorToHistory(v3);
+        coaster.addVisitorToHistory(v4);
+        coaster.addVisitorToHistory(v5);
+        
+        // print before sorting
+        System.out.println("\n--- Before sorting ---");
+        coaster.printRideHistory();
+        
+        // sort the history
+        System.out.println("\n--- Sorting ride history ---");
+        coaster.sortRideHistory();
+        
+        // print after sorting
+        System.out.println("\n--- After sorting ---");
+        coaster.printRideHistory();
     }
 }
