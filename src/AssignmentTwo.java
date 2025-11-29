@@ -8,6 +8,7 @@ public class AssignmentTwo {
         partFourA();
         partFourB();
         partFive();
+        partSix();
     }
     
     // method to test part 1
@@ -225,5 +226,51 @@ public class AssignmentTwo {
         System.out.println("\n--- Running second cycle ---");
         rollerCoaster.runOneCycle();
         System.out.println("Total cycles run: " + rollerCoaster.getNumOfCycles());
+    }
+
+    // PART 6: File export implementation
+    public static void partSix() {
+        System.out.println("\n=== Testing Part 6: Export to File ===");
+        
+        // Create a new ride
+        Employee operator = new Employee("File Master", 35, "E007", "Operator", 3000.0);
+        Ride exportRide = new Ride("Python Ride", "python ride", 20, operator);
+        
+        System.out.println("Created ride: " + exportRide.getRideName());
+        
+        // Create and add at least 5 visitors to ride history
+        System.out.println("\n--- Adding visitors to ride history ---");
+        Visitor v1 = new Visitor("John Doe", 25, "V501", "day pass", false);
+        Visitor v2 = new Visitor("Jane Smith", 30, "V502", "vip", true);
+        Visitor v3 = new Visitor("Mike Johnson", 22, "V503", "regular", false);
+        Visitor v4 = new Visitor("Sarah Wilson", 28, "V504", "vip", true);
+        Visitor v5 = new Visitor("Tom Brown", 35, "V505", "season pass", false);
+        Visitor v6 = new Visitor("Lisa Davis", 19, "V506", "regular", true); // 6th visitor
+        
+        exportRide.addVisitorToHistory(v1);
+        exportRide.addVisitorToHistory(v2);
+        exportRide.addVisitorToHistory(v3);
+        exportRide.addVisitorToHistory(v4);
+        exportRide.addVisitorToHistory(v5);
+        exportRide.addVisitorToHistory(v6);
+        
+        // Print ride history before export
+        System.out.println("\n--- Ride history before export ---");
+        exportRide.printRideHistory();
+        
+        // Export ride history to file
+        System.out.println("\n--- Exporting ride history to file ---");
+        exportRide.exportRideHistory();
+        
+        // Test with custom filename
+        System.out.println("\n--- Exporting with custom filename ---");
+        exportRide.exportRideHistory("test_export.csv");
+        
+        // Test edge case: empty ride history
+        System.out.println("\n--- Testing empty ride history export ---");
+        Ride emptyRide = new Ride("Empty Ride", "test", 10, operator);
+        emptyRide.exportRideHistory();
+        
+        System.out.println("\nPart 6 completed - check project folder for CSV files");
     }
 }

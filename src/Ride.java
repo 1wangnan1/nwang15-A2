@@ -1,5 +1,6 @@
 
 import java.util.*;
+import java.io.*;
 
 public class Ride implements RideInterface {
 
@@ -244,5 +245,68 @@ public class Ride implements RideInterface {
 
     public int getQueueSize() {
         return waitingQueue.size();
+    }
+
+        // PART 6: Export ride history to file
+    public void exportRideHistory() {
+        if (rideHistory.isEmpty()) {
+            System.out.println("Error: No visitors in ride history to export");
+            return;
+        }
+        
+        // Create filename based on ride name
+        String filename = rideName.replace(" ", "_") + "_history.csv";
+        
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            // Write header line
+            writer.println("Name,Age,ID,TicketType,VIP");
+            
+            // Write each visitor as a CSV line
+            for (Visitor visitor : rideHistory) {
+                String line = visitor.getName() + "," +
+                             visitor.getAge() + "," +
+                             visitor.getId() + "," +
+                             visitor.getTicketType() + "," +
+                             visitor.getHasVIP();
+                writer.println(line);
+            }
+            
+            System.out.println("Success: Exported " + rideHistory.size() + 
+                             " visitors to file: " + filename);
+            
+        } catch (IOException e) {
+            System.out.println("Error: Could not write to file " + filename);
+            System.out.println("Error message: " + e.getMessage());
+        }
+    }
+    
+    // PART 6: Alternative method with custom filename (for testing)
+    public void exportRideHistory(String filename) {
+        if (rideHistory.isEmpty()) {
+            System.out.println("Error: No visitors in ride history to export");
+            return;
+        }
+        
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            // Write header line
+            writer.println("Name,Age,ID,TicketType,VIP");
+            
+            // Write each visitor as a CSV line
+            for (Visitor visitor : rideHistory) {
+                String line = visitor.getName() + "," +
+                             visitor.getAge() + "," +
+                             visitor.getId() + "," +
+                             visitor.getTicketType() + "," +
+                             visitor.getHasVIP();
+                writer.println(line);
+            }
+            
+            System.out.println("Success: Exported " + rideHistory.size() + 
+                             " visitors to file: " + filename);
+            
+        } catch (IOException e) {
+            System.out.println("Error: Could not write to file " + filename);
+            System.out.println("Error message: " + e.getMessage());
+        }
     }
 }

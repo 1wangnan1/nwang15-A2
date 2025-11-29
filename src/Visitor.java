@@ -38,4 +38,8 @@ public class Visitor extends Person {
         return "Visitor: " + getName() + " (ID: " + getId() + ", Age: " + getAge() + 
                ", Ticket: " + ticketType + ", " + vipStatus + ")";
     }
+
+    public String toCSV() {
+        return getName() + "," + getAge() + "," + getId() + "," + ticketType + "," + hasVIP;
+    }
 }
